@@ -1,42 +1,58 @@
 
-#!/usr/bin/env bash
 
-printf  "\n--------------------------------------------------------------------------------------------------------------\n"
-printf  "        START  SCRIPT  "
-printf  "\n--------------------------------------------------------------------------------------------------------------\n"
+# ######################################################################################
+#          STARTING POINT
+# ######################################################################################
 
-url=http://localhost:8080/v1/humans
+1) Open the api-docs JSON as follow:
+http://127.0.0.1:8080/v2/api-docs
 
-printf  "API: Add to:  $url\n"
-AddOutput=$(curl -X POST "$url" -H "accept: application/json" -H "Content-Type: application/json" -d "{
-\"id\": 1,
-\"name\": \"Yossi\",
-\"age\": 43
-}")
-printf  "\nThe url is: %s\n"  "$url"
-printf  "\nThe AddOutput is: %s\n\n"  "$AddOutput"
+2) Open the Swagger UI as follow: 
+http://127.0.0.1:8080/swagger-ui.html
 
 
 
-printf  "API: Add to:  $url\n"
-AddOutput=$(curl -X POST "$url" -H "accept: application/json" -H "Content-Type: application/json" -d "{
-\"id\": 2,
-\"name\": \"Daniel\",
-\"age\": 30
-}")
-printf  "\nThe url is: %s\n"  "$url"
-printf  "\nThe AddOutput is: %s\n\n"  "$AddOutput"
+# ######################################################################################
+#          API CALLS
+# ######################################################################################
+
+#)  Add Human 1:
+curl --location --request POST 'http://localhost:8080/v1/humans' \
+--data-raw '{
+    "id": 1,
+    "name": "Yossi",
+    "age": 43
+}'
+
+
+#)  Add Human 2:
+curl --location --request POST 'http://localhost:8080/v1/humans' \
+--data-raw '{
+    "id": 2,
+    "name": "Daniel",
+    "age": 44
+}'
+
+
+#)  Edit Human 1:
+curl --location --request PUT 'http://localhost:8080/v1/humans/1' \
+--data-raw '{
+    "id": 1,
+    "name": "Sami",
+    "age": 20
+}'
+
+#)  Get All Humans:
+curl --location --request GET 'http://localhost:8080/v1/humans' \
+--data-raw ''
+
+
+#)  Remove Human: 
+curl --location --request DELETE 'http://localhost:8080/v1/humans/1' \
+--data-raw ''
 
 
 
-printf  "API: Get All Humans from:  $url\n"
-GetAllOutput=$(curl -X GET "$url" -H "accept: application/json" -H "Content-Type: application/json" )
-printf  "\nThe url is: %s\n"  "$url"
-printf  "\nThe GetAllOutput is: %s\n\n"  "$GetAllOutput"
 
 
 
-
-printf  "\n--------------------------------------------------------------------------------------------------------------\n"
-printf  "          END  SCRIPT  "
-printf  "\n--------------------------------------------------------------------------------------------------------------\n"
