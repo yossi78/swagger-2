@@ -48,7 +48,7 @@ public class HumanController {
 
 
     @PostMapping
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization header", required = true, dataType = "string", paramType = "header")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization header", required = false, dataType = "string", paramType = "header")})
     @ApiResponses(value = {  @ApiResponse(code = 200, message = "Success"),
         @ApiResponse(code = 500, message = "Internal server error"),
         @ApiResponse(code = 400, message = "Bad request"),
@@ -90,7 +90,7 @@ public class HumanController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "Update Human",notes = "Update Human by ID")
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization header", required = true, dataType = "string", paramType = "header")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization header", required = false, dataType = "string", paramType = "header")})
     @ApiResponses(value = {  @ApiResponse(code = 200, message = "Success"),
         @ApiResponse(code = 500, message = "Internal server error"),
         @ApiResponse(code = 400, message = "Bad request"),
@@ -115,7 +115,7 @@ public class HumanController {
 
 
     @DeleteMapping("/{id}")
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization header", required = true, dataType = "string", paramType = "header")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization header", required = false, dataType = "string", paramType = "header")})
     @ApiResponses(value = {  @ApiResponse(code = 200, message = "Success"),
         @ApiResponse(code = 500, message = "Internal server error"),
         @ApiResponse(code = 400, message = "Bad request"),
