@@ -403,6 +403,87 @@
 				"description": "Login for token"
 			},
 			"response": []
+		},
+		{
+			"name": "Upload file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/rbit/Desktop/Smart-Delta/ECU-DETAILS/Files/androidAbPartitionList.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/humans/file",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"humans",
+						"file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mix- Json and File",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data ",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/rbit/Desktop/Smart-Delta/ECU-DETAILS/Files/androidAbPartitionList.txt"
+						},
+						{
+							"key": "human",
+							"value": "{\"id\": 111222333444555,\"age\": 44,\"name\": \"Yossi\"}",
+							"contentType": "application/json",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/humans/jsonWithFile?file",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"humans",
+						"jsonWithFile"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
