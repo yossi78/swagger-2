@@ -6,16 +6,20 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.SneakyThrows;
+import org.apache.tomcat.util.net.openssl.ciphers.Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -115,13 +119,13 @@ public class HumanController {
 
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete Human",notes = "Delete Human by ID")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization header", required = false, dataType = "string", paramType = "header")})
     @ApiResponses(value = {  @ApiResponse(code = 200, message = "Success"),
         @ApiResponse(code = 500, message = "Internal server error"),
         @ApiResponse(code = 400, message = "Bad request"),
         @ApiResponse(code = 401, message = "Authorization failed"),
     })
-    @ApiOperation(value = "Delete Human",notes = "Delete Human by ID")
     public ResponseEntity deleteHuman(@PathVariable Long id) {
         try {
             logger.info("Delete Human by Id: "+ id);
@@ -137,5 +141,45 @@ public class HumanController {
         }
     }
 
+
+    @SneakyThrows
+    @RequestMapping(value = "/file", method = RequestMethod.POST, consumes = MediaType
+        .MULTIPART_FORM_DATA_VALUE, produces = "application/json")
+    @ApiOperation(value = "Upload Files",notes = "Upload a files")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization header", required = false, dataType = "string", paramType = "header")})
+    @ApiResponses(value = {  @ApiResponse(code = 200, message = "Success"),
+        @ApiResponse(code = 500, message = "Internal server error"),
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 401, message = "Authorization failed"),
+    })
+    public ResponseEntity uploadFiles(@ApiParam(value = "Text file to upload", required = true)
+        @RequestPart(value = "file") MultipartFile file) {
+        try {
+            humanService.saveFileToHardDrive(file);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @SneakyThrows
+    @PostMapping(value = "/jsonWithFile", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE }, produces = "application/json")
+    @ApiOperation(value = "Upload File with Human",notes = "Upload a files with Human")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", value = "Authorization header", required = false, dataType = "string", paramType = "header")})
+    @ApiResponses(value = {  @ApiResponse(code = 200, message = "Success"),
+        @ApiResponse(code = 500, message = "Internal server error"),
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 401, message = "Authorization failed"),
+    })
+    public ResponseEntity uploadJsonWithFile(@ApiParam(value = "Human DTO", required = true) @RequestPart(value = "human") Human human ,
+        @ApiParam(value = "Text file to upload", required = true) @RequestPart(value = "file") MultipartFile file) {
+        try {
+            humanService.persistHumanAndSaveFileToHardDrive(human,file);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
