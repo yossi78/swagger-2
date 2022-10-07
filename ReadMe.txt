@@ -1,5 +1,4 @@
 
-
 # ######################################################################################
 #          STARTING POINT
 # ######################################################################################
@@ -7,7 +6,7 @@
 1) Open the api-docs JSON as follow:
 http://127.0.0.1:8080/v2/api-docs
 
-2) Open the Swagger UI as follow: 
+2) Open the Swagger UI as follow:
 http://127.0.0.1:8080/swagger-ui.html
 
 
@@ -47,7 +46,7 @@ curl --location --request GET 'http://localhost:8080/v1/humans' \
 --data-raw ''
 
 
-#)  Remove Human: 
+#)  Remove Human:
 curl --location --request DELETE 'http://localhost:8080/v1/humans/1' \
 --data-raw ''
 
