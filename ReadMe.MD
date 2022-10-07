@@ -23,6 +23,7 @@ curl --location --request POST 'http://localhost:8080/v1/humans' \
     "age": 43
 }'
 
+# ######################################################################################
 
 #)  Add Human 2:
 curl --location --request POST 'http://localhost:8080/v1/humans' \
@@ -32,6 +33,7 @@ curl --location --request POST 'http://localhost:8080/v1/humans' \
     "age": 44
 }'
 
+# ######################################################################################
 
 #)  Edit Human 1:
 curl --location --request PUT 'http://localhost:8080/v1/humans/1' \
@@ -41,14 +43,21 @@ curl --location --request PUT 'http://localhost:8080/v1/humans/1' \
     "age": 20
 }'
 
+# ######################################################################################
+
 #)  Get All Humans:
 curl --location --request GET 'http://localhost:8080/v1/humans' \
 --data-raw ''
+
+# ######################################################################################
 
 
 #)  Remove Human:
 curl --location --request DELETE 'http://localhost:8080/v1/humans/1' \
 --data-raw ''
+
+
+# ######################################################################################
 
 
 
